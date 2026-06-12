@@ -41,7 +41,11 @@ Set-Location (Join-Path $ProjectDir "frontend")
 npm install | Out-Null
 npm run build | Out-Null
 
-Copy-Item (Join-Path $ProjectDir "frontend\dist") (Join-Path $PkgDir "frontend") -Recurse
+# Copy dist contents into frontend/rag-quiz/ (matches nginx root path)
+New-Item -ItemType Directory -Force -Path (Join-Path $PkgDir "frontend\rag-quiz") | Out-Null
+Get-ChildItem (Join-Path $ProjectDir "frontend\dist") | ForEach-Object {
+    Copy-Item $_.FullName (Join-Path $PkgDir "frontend\rag-quiz\$($_.Name)") -Recurse -Force
+}
 Write-Host "  Done" -ForegroundColor Green
 
 # ---- 3. Create package ----
