@@ -62,9 +62,9 @@ function QuizPage({ user, questions, onSubmit }) {
   const allAnswered = questions.every((q) => answers[q.id] !== undefined)
 
   useEffect(() => {
-    fetch(`${API_BASE}/best/${user.employeeId}`)
+    fetch(`${API_BASE}/best/${user.employeeId}?_=${Date.now()}`, { cache: 'no-store' })
       .then((res) => res.json())
-      .then((data) => setBestScore(data ? data.score : -1))
+      .then((data) => setBestScore(data && data.score != null ? data.score : -1))
       .catch(() => setBestScore(-1))
   }, [user.employeeId])
 

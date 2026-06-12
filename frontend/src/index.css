@@ -234,13 +234,14 @@ body {
 
 .best-score {
   font-size: 0.82rem;
-  color: var(--gold);
-  background: rgba(212, 184, 92, 0.12);
-  padding: 4px 12px;
+  color: #f5d878;
+  background: rgba(212, 184, 92, 0.15);
+  padding: 5px 14px;
   border-radius: 8px;
-  border: 1px solid rgba(212, 184, 92, 0.25);
+  border: 1px solid rgba(245, 216, 120, 0.35);
   white-space: nowrap;
   flex-shrink: 0;
+  font-weight: 500;
 }
 
 /* ===== Question ===== */
