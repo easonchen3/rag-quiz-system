@@ -4,3 +4,5 @@ quiz.db
 .env
 *.log
 logs/
+build/
+rag-quiz-deploy.zip
