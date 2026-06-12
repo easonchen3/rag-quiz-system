@@ -90,8 +90,14 @@ fi
 echo "Done. Visit http://<server>/rag-quiz/"
 '@ | Out-File -FilePath (Join-Path $PkgDir "start.sh") -Encoding ascii
 
+# Convert to LF line endings for Linux
+$content = [IO.File]::ReadAllText((Join-Path $PkgDir "start.sh")) -replace "`r`n", "`n"
+[IO.File]::WriteAllText((Join-Path $PkgDir "start.sh"), $content)
+
 # nginx.conf
 Copy-Item (Join-Path $ProjectDir "nginx.conf") $PkgDir
+$content = [IO.File]::ReadAllText((Join-Path $PkgDir "nginx.conf")) -replace "`r`n", "`n"
+[IO.File]::WriteAllText((Join-Path $PkgDir "nginx.conf"), $content)
 
 # Zip
 Set-Location $BuildDir
