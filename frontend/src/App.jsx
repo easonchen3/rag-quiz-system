@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 
-const API_BASE = '/api'
+const API_BASE = '/rag-quiz/api'
 
 const idxToLetter = (i) => String.fromCharCode(65 + i)
 
