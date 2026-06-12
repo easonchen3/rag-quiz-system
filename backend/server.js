@@ -58,13 +58,16 @@ const selectAllStmt = db.prepare("SELECT * FROM results ORDER BY id DESC");
 // 随机抽取题目（选项随机打乱，正确答案位置随机）
 app.get("/api/questions", (req, res) => {
   const easyQuestions = questions.filter((q) => q.difficulty === "easy");
+  const mediumQuestions = questions.filter((q) => q.difficulty === "medium");
   const hardQuestions = questions.filter((q) => q.difficulty === "hard");
 
   const shuffledEasy = [...easyQuestions].sort(() => Math.random() - 0.5);
+  const shuffledMedium = [...mediumQuestions].sort(() => Math.random() - 0.5);
   const shuffledHard = [...hardQuestions].sort(() => Math.random() - 0.5);
 
   const selected = [
-    ...shuffledEasy.slice(0, 7),
+    ...shuffledEasy.slice(0, 5),
+    ...shuffledMedium.slice(0, 2),
     ...shuffledHard.slice(0, 3),
   ].sort(() => Math.random() - 0.5);
 

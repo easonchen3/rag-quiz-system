@@ -1,978 +1,704 @@
-// RAG 知识题库 - 50道简单题 + 30道难题
-// easy: 简单题, hard: 难题
-
 const questions = [
-  // ==================== 简单题 (50道) ====================
-  // --- 基础概念 (1-10) ---
   {
     id: 1,
     difficulty: "easy",
-    question: "RAG 的全称是什么？",
-    options: [
-      "Retrieval-Augmented Generation",
-      "Random Access Generation",
-      "Recurrent Attention Gateway",
-      "Reinforced Adaptive Generation"
-    ],
-    answer: 0
+    question: "RAG的全称是什么？",
+    options: ["Retrieval-Augmented Generation", "Recurrent Attention Gradient", "Randomized Adaptive Gating", "Recursive Autoencoding Graph"],
+    answer: 0,
   },
   {
     id: 2,
     difficulty: "easy",
-    question: "RAG 架构主要由哪两部分组成？",
-    options: [
-      "检索模块 + 生成模块",
-      "编码器 + 解码器",
-      "训练模块 + 推理模块",
-      "嵌入模块 + 分类模块"
-    ],
-    answer: 0
+    question: "RAG的主要目的是什么？",
+    options: ["压缩模型参数量", "提升模型生成内容的准确性和时效性", "加速模型训练速度", "替代Transformer架构"],
+    answer: 1,
   },
   {
     id: 3,
     difficulty: "easy",
-    question: "RAG 技术主要解决大语言模型的什么问题？",
-    options: [
-      "知识截断和幻觉问题",
-      "模型训练速度慢",
-      "模型参数量过大",
-      "推理成本过高"
-    ],
-    answer: 0
+    question: "在RAG中，“检索”通常针对什么进行？",
+    options: ["模型的梯度", "外部知识库或文档集合", "输入图像的像素", "模型内部的注意力权重"],
+    answer: 1,
   },
   {
     id: 4,
     difficulty: "easy",
-    question: "在 RAG 流程中，检索模块的主要作用是什么？",
-    options: [
-      "从知识库中找到与查询最相关的文档片段",
-      "生成最终的回答文本",
-      "对用户输入进行语法检查",
-      "压缩模型参数"
-    ],
-    answer: 0
+    question: "下列哪个组件是RAG系统的核心？",
+    options: ["检索器（Retriever）", "判别器（Discriminator）", "编码器（Encoder）仅", "池化层（Pooling）"],
+    answer: 0,
   },
   {
     id: 5,
     difficulty: "easy",
-    question: "RAG 与传统的纯生成式 LLM 最大的区别是什么？",
-    options: [
-      "RAG 会先检索外部知识再生成回答",
-      "RAG 使用更小的模型",
-      "RAG 不需要训练数据",
-      "RAG 只能处理英文"
-    ],
-    answer: 0
+    question: "RAG中的生成部分通常使用什么类型的模型？",
+    options: ["卷积神经网络（CNN）", "循环神经网络（RNN）", "大语言模型（LLM）", "多层感知机（MLP）"],
+    answer: 2,
   },
   {
     id: 6,
     difficulty: "easy",
-    question: "以下哪个是 RAG 架构的核心优势？",
-    options: [
-      "能够引用外部知识，减少幻觉",
-      "推理速度比传统 LLM 快 10 倍",
-      "不需要任何硬件资源",
-      "可以完全替代模型训练"
-    ],
-    answer: 0
+    question: "检索器通常将文档和查询转换为哪种表示形式？",
+    options: ["独热向量", "词袋模型", "稠密向量（嵌入）", "整数值索引"],
+    answer: 2,
   },
   {
     id: 7,
     difficulty: "easy",
-    question: "RAG 流程中，「检索」发生在哪个阶段？",
-    options: [
-      "生成回答之前",
-      "生成回答之后",
-      "生成回答的同时",
-      "与生成回答无关"
-    ],
-    answer: 0
+    question: "向量数据库在RAG中的作用是？",
+    options: ["存储训练数据", "加速相似向量搜索", "生成文本", "执行梯度下降"],
+    answer: 1,
   },
   {
     id: 8,
     difficulty: "easy",
-    question: "RAG 系统中，知识库通常以什么形式存储？",
-    options: [
-      "文档片段/Chunk",
-      "完整的原始文档",
-      "关系型数据库表",
-      "CSV 文件"
-    ],
-    answer: 0
+    question: "下列哪个是常用的向量数据库？",
+    options: ["MySQL", "PostgreSQL", "Pinecone", "Redis（仅键值）"],
+    answer: 2,
   },
   {
     id: 9,
     difficulty: "easy",
-    question: "什么是「幻觉」(Hallucination) 问题？",
-    options: [
-      "模型生成看似合理但实际错误的内容",
-      "模型运行时 GPU 发热",
-      "模型无法理解图像",
-      "模型训练时出现过拟合"
-    ],
-    answer: 0
+    question: "RAG中常用的相似度度量不包括？",
+    options: ["余弦相似度", "欧氏距离", "点积", "编辑距离"],
+    answer: 3,
   },
   {
     id: 10,
     difficulty: "easy",
-    question: "RAG 能否帮助 LLM 回答训练数据截止日期之后的问题？",
-    options: [
-      "可以，通过检索最新的外部知识",
-      "不可以，LLM 的知识无法更新",
-      "只能回答训练数据内的问题",
-      "需要重新训练模型才能回答"
-    ],
-    answer: 0
+    question: "在RAG中，“上下文窗口”指的是什么？",
+    options: ["检索到的文档数量", "生成模型一次能处理的最大token数", "向量索引的分片数", "训练时的批量大小"],
+    answer: 1,
   },
-  // --- 向量数据库基础 (11-20) ---
   {
     id: 11,
     difficulty: "easy",
-    question: "向量数据库在 RAG 中的主要作用是什么？",
-    options: [
-      "存储和检索文档的向量表示",
-      "存储用户登录信息",
-      "管理模型训练参数",
-      "渲染前端页面"
-    ],
-    answer: 0
+    question: "RAG通常用于解决LLM的什么问题？",
+    options: ["过拟合", "幻觉（Hallucination）", "梯度消失", "训练速度慢"],
+    answer: 1,
   },
   {
     id: 12,
     difficulty: "easy",
-    question: "以下哪个不是常见的向量数据库？",
-    options: [
-      "MySQL",
-      "Milvus",
-      "Pinecone",
-      "Chroma"
-    ],
-    answer: 0
+    question: "下列哪项是RAG的典型应用场景？",
+    options: ["图像分类", "问答系统", "语音识别", "目标检测"],
+    answer: 1,
   },
   {
     id: 13,
     difficulty: "easy",
-    question: "向量数据库中「相似度检索」通常基于什么度量？",
-    options: [
-      "余弦相似度或欧氏距离",
-      "字符串精确匹配",
-      "哈希碰撞率",
-      "正则表达式匹配"
-    ],
-    answer: 0
+    question: "RAG中的“知识库”通常由什么构成？",
+    options: ["模型参数", "文本段落或文档", "图像特征", "音频波形"],
+    answer: 1,
   },
   {
     id: 14,
     difficulty: "easy",
-    question: "Chroma 是什么？",
-    options: [
-      "一个开源的向量数据库",
-      "一种新的编程语言",
-      "一个前端框架",
-      "一种加密算法"
-    ],
-    answer: 0
+    question: "在检索阶段，用户输入被称为？",
+    options: ["文档", "查询（Query）", "标签", "响应"],
+    answer: 1,
   },
   {
     id: 15,
     difficulty: "easy",
-    question: "在向量检索中，Top-K 指的是什么？",
-    options: [
-      "返回相似度最高的 K 个结果",
-      "向量维度为 K",
-      "数据库中有 K 个集合",
-      "需要 K 次查询"
-    ],
-    answer: 0
+    question: "将文档分割成更小片段（chunk）的主要目的是？",
+    options: ["减少存储空间", "提高检索粒度和相关性", "增加模型参数量", "加密数据"],
+    answer: 1,
   },
   {
     id: 16,
     difficulty: "easy",
-    question: "Milvus 主要应用于什么场景？",
-    options: [
-      "大规模向量相似度检索",
-      "前端页面渲染",
-      "文件系统管理",
-      "网络流量监控"
-    ],
-    answer: 0
+    question: "稠密检索（Dense Retrieval）与传统稀疏检索（如BM25）的主要区别是？",
+    options: ["稠密检索使用神经网络生成嵌入", "稠密检索速度更慢", "稀疏检索无法处理文本", "两者没有区别"],
+    answer: 0,
   },
   {
     id: 17,
     difficulty: "easy",
-    question: "Pinecone 的主要特点是？",
-    options: [
-      "全托管的云端向量数据库服务",
-      "本地文件存储系统",
-      "开源的关系型数据库",
-      "前端 UI 组件库"
-    ],
-    answer: 0
+    question: "RAG中“生成增强”的含义是？",
+    options: ["对检索结果进行二次增强", "将检索到的信息作为额外输入提供给生成模型", "增强生成模型的训练数据", "增强向量索引"],
+    answer: 1,
   },
   {
     id: 18,
     difficulty: "easy",
-    question: "向量数据库中的「索引」主要用于什么？",
-    options: [
-      "加速向量相似度搜索",
-      "存储原始文档内容",
-      "管理用户权限",
-      "生成随机向量"
-    ],
-    answer: 0
+    question: "下列哪项不是RAG系统的输出？",
+    options: ["生成的文本答案", "检索到的参考文档", "模型训练损失值", "引用来源"],
+    answer: 2,
   },
   {
     id: 19,
     difficulty: "easy",
-    question: "FAISS 是由哪个公司开源的向量检索库？",
-    options: [
-      "Meta (Facebook)",
-      "Google",
-      "Microsoft",
-      "Amazon"
-    ],
-    answer: 0
+    question: "最简单的RAG流程是？",
+    options: ["检索 → 生成", "生成 → 检索", "检索 → 重排 → 生成", "检索 → 检索 → 生成"],
+    answer: 0,
   },
   {
     id: 20,
     difficulty: "easy",
-    question: "向量检索中，ANN 是什么意思？",
-    options: [
-      "近似最近邻 (Approximate Nearest Neighbor)",
-      "人工神经网络 (Artificial Neural Network)",
-      "自动归一化 (Auto Normalization)",
-      "异步通知网络 (Async Notification Network)"
-    ],
-    answer: 0
+    question: "嵌入模型（Embedding Model）的作用是？",
+    options: ["将文本映射到固定维度的向量空间", "直接生成答案", "对答案进行排序", "压缩模型大小"],
+    answer: 0,
   },
-  // --- 嵌入 (Embedding) 基础 (21-30) ---
   {
     id: 21,
     difficulty: "easy",
-    question: "Embedding（嵌入）的作用是什么？",
-    options: [
-      "将文本转换为固定维度的向量表示",
-      "压缩图片文件大小",
-      "加密用户密码",
-      "加速网络传输"
-    ],
-    answer: 0
+    question: "哪个指标常用于评估检索结果的相关性？",
+    options: ["BLEU", "ROUGE", "召回率（Recall）", "困惑度（Perplexity）"],
+    answer: 2,
   },
   {
     id: 22,
     difficulty: "easy",
-    question: "以下哪个是常见的 Embedding 模型？",
-    options: [
-      "text-embedding-ada-002",
-      "GPT-4-Vision",
-      "Stable Diffusion",
-      "Whisper"
-    ],
-    answer: 0
+    question: "RAG与纯LLM生成相比，最大的优势是？",
+    options: ["推理速度更快", "能够引用外部知识，减少幻觉", "无需训练数据", "参数量更小"],
+    answer: 1,
   },
   {
     id: 23,
     difficulty: "easy",
-    question: "语义相似的文本，其向量表示通常有什么特征？",
-    options: [
-      "在向量空间中距离较近",
-      "在向量空间中距离较远",
-      "向量长度完全相同",
-      "向量全部为零"
-    ],
-    answer: 0
+    question: "在RAG中，“chunk大小”指的是？",
+    options: ["每个文档片段的字符或token数量", "向量数据库的分区数量", "生成模型的最大输出长度", "检索返回的文档个数"],
+    answer: 0,
   },
   {
     id: 24,
     difficulty: "easy",
-    question: "Embedding 向量的维度通常是多少？",
-    options: [
-      "几百到几千维",
-      "1-10 维",
-      "上百万维",
-      "无限维"
-    ],
-    answer: 0
+    question: "下列哪个库常用于实现RAG的检索部分？",
+    options: ["LangChain", "TensorFlow", "PyTorch", "OpenCV"],
+    answer: 0,
   },
   {
     id: 25,
     difficulty: "easy",
-    question: "OpenAI 的 text-embedding-ada-002 输出多少维向量？",
-    options: [
-      "1536 维",
-      "768 维",
-      "512 维",
-      "4096 维"
-    ],
-    answer: 0
+    question: "RAG通常需要对知识库中的文档进行什么预处理？",
+    options: ["分词、去除停用词、嵌入向量化", "图像增强", "音频降噪", "视频编码"],
+    answer: 0,
   },
   {
     id: 26,
     difficulty: "easy",
-    question: "使用 Embedding 模型时，输入文本的长度是否有限制？",
-    options: [
-      "有，通常有最大 token 限制",
-      "没有，可以输入任意长度",
-      "只能输入单个单词",
-      "只能输入英文"
-    ],
-    answer: 0
+    question: "当检索结果不相关时，生成模型最可能发生什么？",
+    options: ["输出准确答案", "忽略检索内容，依赖自身知识", "产生幻觉或错误答案", "停止生成"],
+    answer: 2,
   },
   {
     id: 27,
     difficulty: "easy",
-    question: "BGE Embedding 是由哪个机构开源的？",
-    options: [
-      "BAAI（北京智源人工智能研究院）",
-      "OpenAI",
-      "Google",
-      "Meta"
-    ],
-    answer: 0
+    question: "在RAG中，“top-k检索”指的是？",
+    options: ["返回最相似的k个文档片段", "只检索第k个文档", "使用k均值聚类", "检索k次"],
+    answer: 0,
   },
   {
     id: 28,
     difficulty: "easy",
-    question: "Embedding 模型通常使用什么方法来训练？",
-    options: [
-      "对比学习 (Contrastive Learning)",
-      "监督分类",
-      "强化学习",
-      "决策树"
-    ],
-    answer: 0
+    question: "下列哪种嵌入模型常用于RAG？",
+    options: ["BERT", "ResNet", "YOLO", "VGG"],
+    answer: 0,
   },
   {
     id: 29,
     difficulty: "easy",
-    question: "多语言 Embedding 模型能做什么？",
-    options: [
-      "将不同语言的文本映射到同一个向量空间",
-      "自动翻译所有语言",
-      "只处理英文文本",
-      "生成图像向量"
-    ],
-    answer: 0
+    question: "RAG的生成模型通常采用什么形式的输入？",
+    options: ["仅查询", "仅检索到的文档", "查询 + 检索到的文档拼接", "随机噪声"],
+    answer: 2,
   },
   {
     id: 30,
     difficulty: "easy",
-    question: "为什么 Embedding 在 RAG 中很重要？",
-    options: [
-      "它实现了语义级别的检索，而非关键词匹配",
-      "它让模型运行更快",
-      "它减少了模型参数数量",
-      "它替代了整个 LLM"
-    ],
-    answer: 0
+    question: "更新RAG系统中的知识库，通常需要？",
+    options: ["重新训练整个生成模型", "重新计算新文档的嵌入并插入向量库", "修改模型参数", "重启数据库服务"],
+    answer: 1,
   },
-  // --- 文档分块 (Chunking) 基础 (31-40) ---
   {
     id: 31,
     difficulty: "easy",
-    question: "在 RAG 中，「Chunking」指的是什么？",
-    options: [
-      "将长文档切分成较小的片段",
-      "将多个文档合并为一个",
-      "将图片转换为文本",
-      "将音频转为文字"
-    ],
-    answer: 0
+    question: "下列哪个是RAG中生成模型的常用基座？",
+    options: ["GPT系列", "LeNet", "AlexNet", "U-Net"],
+    answer: 0,
   },
   {
     id: 32,
     difficulty: "easy",
-    question: "文档分块的常见大小是多少？",
-    options: [
-      "256-1024 tokens",
-      "1-10 tokens",
-      "10000-50000 tokens",
-      "无限制"
-    ],
-    answer: 0
+    question: "为什么需要将文档分块（chunking）？",
+    options: ["避免超出LLM的上下文窗口限制", "提高检索速度", "降低存储成本", "防止过拟合"],
+    answer: 0,
   },
   {
     id: 33,
     difficulty: "easy",
-    question: "Chunk Overlap（分块重叠）的作用是什么？",
-    options: [
-      "避免上下文在分块边界处断裂",
-      "增加存储空间使用",
-      "减少向量维度",
-      "加速检索速度"
-    ],
-    answer: 0
+    question: "在RAG中，“索引（Index）”指的是？",
+    options: ["文档片段的向量化存储结构", "数据库的主键", "模型的层索引", "训练迭代次数"],
+    answer: 0,
   },
   {
     id: 34,
     difficulty: "easy",
-    question: "文档分块太小可能导致什么问题？",
-    options: [
-      "丢失上下文信息",
-      "检索速度变慢",
-      "向量维度增加",
-      "存储成本降低"
-    ],
-    answer: 0
+    question: "以下哪个操作发生在RAG的生成阶段之前？",
+    options: ["答案校对", "相似度排序", "输出采样", "损失计算"],
+    answer: 1,
   },
   {
     id: 35,
     difficulty: "easy",
-    question: "文档分块太大可能导致什么问题？",
-    options: [
-      "检索精度下降，引入噪声",
-      "向量维度降低",
-      "检索速度变快",
-      "无需 Embedding"
-    ],
-    answer: 0
+    question: "RAG不适用于哪种任务？",
+    options: ["开放域问答", "事实核查", "图像分割", "文档摘要"],
+    answer: 2,
   },
   {
     id: 36,
     difficulty: "easy",
-    question: "常见的 Chunking 策略不包括？",
-    options: [
-      "随机删除文本",
-      "固定长度切分",
-      "基于段落的切分",
-      "语义切分"
-    ],
-    answer: 0
+    question: "检索器的训练通常使用什么损失函数？",
+    options: ["对比损失（Contrastive Loss）", "交叉熵损失（仅分类）", "均方误差", "铰链损失（Hinge Loss）"],
+    answer: 0,
   },
   {
     id: 37,
     difficulty: "easy",
-    question: "LangChain 中用于文本分割的模块是什么？",
-    options: [
-      "Text Splitters",
-      "Vector Stores",
-      "Chains",
-      "Agents"
-    ],
-    answer: 0
+    question: "以下哪种技术可以提升检索速度？",
+    options: ["使用近似最近邻（ANN）索引", "增加文档chunk大小", "使用更深的嵌入模型", "禁用缓存"],
+    answer: 0,
   },
   {
     id: 38,
     difficulty: "easy",
-    question: "RecursiveCharacterTextSplitter 的切分逻辑是什么？",
-    options: [
-      "按优先级依次尝试分隔符进行递归切分",
-      "随机选择切分位置",
-      "只按字符数切分",
-      "只按单词切分"
-    ],
-    answer: 0
+    question: "RAG中的“引用”通常指？",
+    options: ["模型参数的来源", "生成答案所依据的检索文档片段", "训练数据集的引用", "代码库的引用"],
+    answer: 1,
   },
   {
     id: 39,
     difficulty: "easy",
-    question: "语义分块 (Semantic Chunking) 与固定大小分块的主要区别？",
-    options: [
-      "语义分块根据文本的语义边界进行切分",
-      "语义分块总是产生更小的块",
-      "语义分块不需要 Embedding",
-      "语义分块只适用于英文"
-    ],
-    answer: 0
+    question: "下面哪个是RAG的变体？",
+    options: ["RAG-Sequence", "RAG-Token", "两者都是", "两者都不是"],
+    answer: 2,
   },
   {
     id: 40,
     difficulty: "easy",
-    question: "文档分块后，下一步通常是什么？",
-    options: [
-      "对每个分块生成 Embedding 并存入向量数据库",
-      "直接输入 LLM",
-      "删除原始文档",
-      "进行模型训练"
-    ],
-    answer: 0
+    question: "RAG-Sequence和RAG-Token的主要区别在于？",
+    options: ["检索发生的粒度（整个序列还是每个token）", "使用的生成模型不同", "嵌入维度不同", "知识库类型不同"],
+    answer: 0,
   },
-  // --- RAG 框架与工具 (41-50) ---
   {
     id: 41,
     difficulty: "easy",
-    question: "LangChain 是什么？",
-    options: [
-      "一个用于构建 LLM 应用的开源框架",
-      "一种编程语言",
-      "一个数据库系统",
-      "一个前端框架"
-    ],
-    answer: 0
+    question: "在RAG中，“稠密检索”相比“稀疏检索”的缺点可能是？",
+    options: ["无法捕捉语义", "需要大量计算资源来训练嵌入模型", "不支持文本", "速度极慢"],
+    answer: 1,
   },
   {
     id: 42,
     difficulty: "easy",
-    question: "LlamaIndex 主要用于什么场景？",
-    options: [
-      "构建 RAG 应用的数据索引和检索",
-      "训练大语言模型",
-      "图像识别",
-      "音频处理"
-    ],
-    answer: 0
+    question: "以下哪个不是RAG的评估维度？",
+    options: ["答案准确性", "检索召回率", "模型参数量", "生成流畅度"],
+    answer: 2,
   },
   {
     id: 43,
     difficulty: "easy",
-    question: "以下哪个不是常见的 RAG 开发框架？",
-    options: [
-      "React.js",
-      "LangChain",
-      "LlamaIndex",
-      "Haystack"
-    ],
-    answer: 0
+    question: "在LangChain框架中，实现RAG通常需要组合哪些模块？",
+    options: ["TextLoader, VectorStore, LLM", "Conv2D, MaxPool2D, Linear", "LSTM, GRU, Attention", "TransformerEncoder, PositionalEncoding"],
+    answer: 0,
   },
   {
     id: 44,
     difficulty: "easy",
-    question: "LangChain 中，Agent 的概念是什么？",
-    options: [
-      "能够根据任务动态选择工具和行动的智能体",
-      "数据库连接器",
-      "前端渲染组件",
-      "日志记录器"
-    ],
-    answer: 0
+    question: "当知识库非常庞大时，全量扫描检索的复杂度是？",
+    options: ["O(1)", "O(log n)", "O(n)", "O(n²)"],
+    answer: 2,
   },
   {
     id: 45,
     difficulty: "easy",
-    question: "RAG 系统的典型工作流程第一步是什么？",
-    options: [
-      "加载和预处理文档",
-      "生成最终答案",
-      "部署到生产环境",
-      "训练 Embedding 模型"
-    ],
-    answer: 0
+    question: "近似最近邻（ANN）检索相比精确检索牺牲了什么？",
+    options: ["召回率", "存储空间", "查询灵活性", "支持的数据类型"],
+    answer: 0,
   },
   {
     id: 46,
     difficulty: "easy",
-    question: "在 LangChain 中，「Chain」的主要作用是什么？",
-    options: [
-      "将多个步骤串联成完整的工作流",
-      "存储向量数据",
-      "管理 API 密钥",
-      "处理图像输入"
-    ],
-    answer: 0
+    question: "RAG中的“HyDE”方法是？",
+    options: ["对查询进行假设性文档生成后再检索", "对文档进行超维编码", "混合密度估计", "动态上下文扩展"],
+    answer: 0,
   },
   {
     id: 47,
     difficulty: "easy",
-    question: "HuggingFace 的 Sentence-Transformers 库主要用于什么？",
-    options: [
-      "生成文本的句子级 Embedding",
-      "训练大语言模型",
-      "图像分类",
-      "语音识别"
-    ],
-    answer: 0
+    question: "以下哪个是RAG的典型挑战？",
+    options: ["检索结果与生成模型内部知识冲突", "无法处理长文本", "不支持多模态", "需要GPU训练"],
+    answer: 0,
   },
   {
     id: 48,
     difficulty: "easy",
-    question: "RAG 系统使用哪种类型的 Prompt？",
-    options: [
-      "包含检索到的上下文信息的 Prompt",
-      "空白的 Prompt",
-      "只有问题的 Prompt",
-      "随机生成的 Prompt"
-    ],
-    answer: 0
+    question: "在RAG中，“重排序（Re-ranking）”的作用是？",
+    options: ["改变检索器的训练目标", "对初步检索结果进行更精细的相关性排序", "重新生成查询", "压缩文档长度"],
+    answer: 1,
   },
   {
     id: 49,
     difficulty: "easy",
-    question: "RAG 的检索结果通常以什么形式传给 LLM？",
-    options: [
-      "作为 Prompt 上下文的一部分",
-      "作为模型参数的一部分",
-      "作为 API 请求头",
-      "作为数据库查询语句"
-    ],
-    answer: 0
+    question: "检索器的召回率低会导致？",
+    options: ["生成答案缺乏必要的支持信息", "生成模型过度自信", "检索速度变慢", "向量库损坏"],
+    answer: 0,
   },
   {
     id: 50,
     difficulty: "easy",
-    question: "构建 RAG 应用的第一步通常是什么？",
-    options: [
-      "准备知识库文档并建立索引",
-      "直接写 Prompt",
-      "训练 LLM 模型",
-      "购买 GPU 服务器"
-    ],
-    answer: 0
+    question: "下列哪个是RAG系统的输入？",
+    options: ["用户问题", "模型权重", "训练标签", "损失函数"],
+    answer: 0,
   },
-
-  // ==================== 难题 (30道) ====================
-  // --- 高级检索策略 (1-10) ---
   {
     id: 51,
-    difficulty: "hard",
-    question: "在 RAG 中，HyDE (Hypothetical Document Embeddings) 策略的核心思想是什么？",
-    options: [
-      "先让 LLM 生成假设性答案，再用该答案的 Embedding 去检索",
-      "使用混合精度进行 Embedding 计算",
-      "将多个文档合并为一个进行检索",
-      "对检索结果进行随机扰动"
-    ],
-    answer: 0
+    difficulty: "medium",
+    question: "在RAG中，如果检索到的文档与查询高度相关但答案错误，问题最可能出在？",
+    options: ["嵌入模型", "生成模型的理解或推理能力", "向量索引结构", "文档分块大小"],
+    answer: 1,
   },
   {
     id: 52,
-    difficulty: "hard",
-    question: "Multi-Query Retrieval 策略如何提升检索效果？",
-    options: [
-      "从不同角度生成多个查询变体，分别检索后合并结果",
-      "同时对多个数据库执行查询",
-      "在一个查询中包含多个问题",
-      "多次重复相同的查询取平均结果"
-    ],
-    answer: 0
+    difficulty: "medium",
+    question: "以下哪种策略能有效缓解“中间丢失”现象（Lost in the Middle）？",
+    options: ["将检索到的文档按相关性重新排序，最相关的放在上下文两端", "增加生成的温度参数", "使用更大的嵌入维度", "减少检索文档数量"],
+    answer: 0,
   },
   {
     id: 53,
-    difficulty: "hard",
-    question: "Re-ranking（重排序）在 RAG 中的作用是什么？",
-    options: [
-      "对初步检索结果进行精细排序，提高最相关文档的排名",
-      "重新训练 Embedding 模型",
-      "重新生成所有文档的 Embedding",
-      "对问题进行改写"
-    ],
-    answer: 0
+    difficulty: "medium",
+    question: "针对RAG的“查询重写”（Query Rewriting）技术的主要目的是？",
+    options: ["将用户问题改写成更适合检索的形式", "压缩查询长度", "加密查询内容", "增加查询的随机性"],
+    answer: 0,
   },
   {
     id: 54,
-    difficulty: "hard",
-    question: "Cross-Encoder 与 Bi-Encoder 在检索中的主要区别是什么？",
-    options: [
-      "Cross-Encoder 同时对查询和文档进行联合编码，精度更高但速度慢；Bi-Encoder 分别编码，速度快",
-      "Cross-Encoder 只能处理英文",
-      "Bi-Encoder 不生成 Embedding",
-      "两者没有本质区别"
-    ],
-    answer: 0
+    difficulty: "medium",
+    question: "下列哪种方法属于“主动检索”（Active Retrieval）？",
+    options: ["在生成过程中多次调用检索器", "预先缓存所有可能的查询结果", "使用固定的检索阈值", "只检索一次"],
+    answer: 0,
   },
   {
     id: 55,
-    difficulty: "hard",
-    question: "Self-RAG 的核心创新点是什么？",
-    options: [
-      "让 LLM 在生成过程中自我评估是否需要检索，并对检索内容进行反思",
-      "完全不需要外部知识库",
-      "使用自监督学习训练检索器",
-      "检索器与生成器使用相同的模型参数"
-    ],
-    answer: 0
+    difficulty: "medium",
+    question: "评估RAG生成答案的“忠实度”（Faithfulness）是指？",
+    options: ["答案是否完全来自检索到的文档", "答案的语法正确性", "答案的长度符合要求", "答案是否包含数学公式"],
+    answer: 0,
   },
   {
     id: 56,
-    difficulty: "hard",
-    question: "RAPTOR 论文提出的文档索引方法是什么？",
-    options: [
-      "递归地对文档进行摘要聚类，构建树状层级索引",
-      "使用扁平化的向量索引",
-      "直接将所有文档拼接成一个长文本",
-      "随机采样文档片段"
-    ],
-    answer: 0
+    difficulty: "medium",
+    question: "以下哪个指标不适合评估RAG的检索质量？",
+    options: ["MRR（Mean Reciprocal Rank）", "NDCG（Normalized Discounted Cumulative Gain）", "BLEU", "Hit Rate"],
+    answer: 2,
   },
   {
     id: 57,
-    difficulty: "hard",
-    question: "在 RAG 检索中，什么是「Late Interaction」方法？",
-    options: [
-      "在检索的最后阶段计算查询和文档 Token 级别的交互，如 ColBERT 模型",
-      "用户与系统交互延迟进行",
-      "推迟 Embedding 的计算时间",
-      "分批处理文档"
-    ],
-    answer: 0
+    difficulty: "medium",
+    question: "在RAG中，使用“滑动窗口分块”（Sliding Window Chunking）的好处是？",
+    options: ["保留段落间的上下文重叠", "减少存储空间", "加速检索", "防止过拟合"],
+    answer: 0,
   },
   {
     id: 58,
-    difficulty: "hard",
-    question: "查询重写 (Query Rewriting) 在 RAG 中的主要目的是什么？",
-    options: [
-      "将用户的原始查询优化为更适合检索的形式",
-      "修改用户的个人信息",
-      "更改数据库结构",
-      "重新训练检索模型"
-    ],
-    answer: 0
+    difficulty: "medium",
+    question: "当使用LLM作为生成器时，增加检索到的文档数量（如从5增加到20）可能带来的问题是？",
+    options: ["超出LLM的上下文窗口", "检索延迟降低", "答案准确性必然提升", "嵌入维度需增加"],
+    answer: 0,
   },
   {
     id: 59,
-    difficulty: "hard",
-    question: "BM25 与 Dense Retrieval 相比，在什么场景下可能更有优势？",
-    options: [
-      "对精确关键词匹配要求高的领域（如法律、医疗术语）",
-      "对所有类型的查询都更有优势",
-      "需要理解语义相似性的场景",
-      "处理多语言文档时"
-    ],
-    answer: 0
+    difficulty: "medium",
+    question: "下列哪项技术可以用于RAG中减少重复的检索计算？",
+    options: ["结果缓存（Cache）", "数据增强", "学习率衰减", "梯度裁剪"],
+    answer: 0,
   },
   {
     id: 60,
-    difficulty: "hard",
-    question: "混合检索 (Hybrid Search) 的典型做法是什么？",
-    options: [
-      "结合稀疏检索 (BM25) 和稠密检索 (Embedding) 的结果进行融合",
-      "同时使用多个 LLM 生成答案",
-      "混合使用不同的 Chunk 大小",
-      "在训练和推理阶段使用不同的模型"
-    ],
-    answer: 0
+    difficulty: "medium",
+    question: "“自我反思”（Self-RAG）的特点是什么？",
+    options: ["模型在生成过程中评估检索是否需要以及是否相关", "模型对自己的输出进行语法检查", "模型训练时使用对抗样本", "模型生成多个答案后投票"],
+    answer: 0,
   },
-  // --- 高级分块与嵌入 (11-20) ---
   {
     id: 61,
-    difficulty: "hard",
-    question: "Sentence Window Retrieval 与标准分块检索的主要区别是什么？",
-    options: [
-      "检索时用小分块匹配，但返回时带回周围上下文的窗口",
-      "只检索单个句子",
-      "不使用 Embedding",
-      "检索结果随机排列"
-    ],
-    answer: 0
+    difficulty: "medium",
+    question: "在RAG系统中，优化“检索-生成”协同的策略不包括？",
+    options: ["联合微调解码器和检索器", "使用强化学习调整检索器的阈值", "增加生成模型的层数", "训练一个适配器来重新加权检索结果"],
+    answer: 2,
   },
   {
     id: 62,
-    difficulty: "hard",
-    question: "Parent Document Retriever 的工作原理是什么？",
-    options: [
-      "先用小分块检索，再返回对应的大分块（父文档）作为上下文",
-      "只检索原始文档的标题",
-      "对文档进行随机抽样",
-      "使用父进程检索文档"
-    ],
-    answer: 0
+    difficulty: "medium",
+    question: "针对多模态RAG，下列描述正确的是？",
+    options: ["检索的文档只能包含文本", "可以使用多模态嵌入（如CLIP）进行图文联合检索", "生成模型必须是多模态的", "图像不能作为检索源"],
+    answer: 1,
   },
   {
     id: 63,
-    difficulty: "hard",
-    question: "Matryoshka Embedding 的主要优势是什么？",
-    options: [
-      "支持灵活截断向量维度而不过多损失性能，适应不同存储需求",
-      "生成更高维度的向量",
-      "只能用于图像处理",
-      "需要更长的训练时间"
-    ],
-    answer: 0
+    difficulty: "medium",
+    question: "在评估RAG系统时，“上下文相关性”（Context Relevance）指的是？",
+    options: ["检索到的文档是否与查询相关", "生成答案是否流畅", "系统响应时间是否短", "向量索引是否紧凑"],
+    answer: 0,
   },
   {
     id: 64,
-    difficulty: "hard",
-    question: "在 RAG 中，Contextual Retrieval（上下文检索）技术是如何工作的？",
-    options: [
-      "在 Embedding 时为每个 Chunk 添加文档级别的上下文描述前缀",
-      "根据用户地理位置选择知识库",
-      "在检索时随机添加噪声",
-      "只使用文档标题进行检索"
-    ],
-    answer: 0
+    difficulty: "medium",
+    question: "RAG中“文档打包”（Document Packing）技术用于？",
+    options: ["将多个检索片段合并成一个适合LLM输入的格式", "压缩文档以节省存储", "加密文档内容", "对文档进行去重"],
+    answer: 0,
   },
   {
     id: 65,
-    difficulty: "hard",
-    question: "ColBERT 的「Late Interaction」机制具体指什么？",
-    options: [
-      "在检索阶段使用 MaxSim 操作计算查询和文档 Token 级相似度",
-      "用户与系统的后期交互",
-      "延迟加载 Embedding 模型",
-      "批量处理检索请求"
-    ],
-    answer: 0
+    difficulty: "medium",
+    question: "以下哪种情况最适合使用RAG而不是微调LLM？",
+    options: ["知识频繁更新且需要低延迟", "固定领域的少量私有数据", "模型需要学习新的语言风格", "训练数据充足且任务单一"],
+    answer: 0,
   },
   {
     id: 66,
-    difficulty: "hard",
-    question: "Multi-Vector Retrieval 相比 Single-Vector 有什么优势？",
-    options: [
-      "为每个文档生成多个向量表示，能捕获更细粒度的语义信息",
-      "减少存储空间",
-      "简化系统架构",
-      "提高训练速度"
-    ],
-    answer: 0
+    difficulty: "medium",
+    question: "“重排序模型”通常比嵌入检索器更准确但更慢，因此常被用于？",
+    options: ["作为第一级检索", "对初步检索的少量候选进行精细排序", "替代向量数据库", "用于训练嵌入模型"],
+    answer: 1,
   },
   {
     id: 67,
-    difficulty: "hard",
-    question: "Adaptive RAG 的核心思想是什么？",
-    options: [
-      "根据查询的复杂度动态选择检索策略",
-      "使用固定的检索参数",
-      "不进行检索直接生成答案",
-      "每次随机选择检索方式"
-    ],
-    answer: 0
+    difficulty: "medium",
+    question: "在RAG中，稀疏检索器（如BM25）和稠密检索器混合使用的主要好处是？",
+    options: ["同时利用关键词匹配和语义相似性", "降低计算复杂度", "简化系统架构", "避免使用向量数据库"],
+    answer: 0,
   },
   {
     id: 68,
-    difficulty: "hard",
-    question: "Graph RAG 与传统 RAG 的主要区别是什么？",
-    options: [
-      "Graph RAG 使用知识图谱的结构化关系来增强检索",
-      "Graph RAG 只能回答图论问题",
-      "Graph RAG 不需要 Embedding",
-      "Graph RAG 使用 GPU 渲染图形"
-    ],
-    answer: 0
+    difficulty: "medium",
+    question: "下列哪个不是RAG中常见的查询优化方法？",
+    options: ["查询扩展（Query Expansion）", "查询分解（Query Decomposition）", "查询加密（Query Encryption）", "假想文档生成（HyDE）"],
+    answer: 2,
   },
   {
     id: 69,
-    difficulty: "hard",
-    question: "在 RAG 中，Fusion Retrieval（融合检索）通常指什么？",
-    options: [
-      "使用 Reciprocal Rank Fusion 等方法合并多个检索源的结果",
-      "将检索结果直接拼接",
-      "随机选择检索源",
-      "只使用一个检索源"
-    ],
-    answer: 0
+    difficulty: "medium",
+    question: "对于RAG系统，知识库版本更新的最佳实践是？",
+    options: ["完全重建向量索引", "增量更新嵌入并维护两个索引", "每次重新训练生成模型", "忽略旧文档"],
+    answer: 1,
   },
   {
     id: 70,
-    difficulty: "hard",
-    question: "LLM-Augmented Retrieval 的含义是什么？",
-    options: [
-      "在检索阶段利用 LLM 的能力来增强检索效果（如查询扩展、文档理解）",
-      "用 LLM 替代向量数据库",
-      "用 LLM 替代 Embedding 模型",
-      "完全不需要检索的 LLM 应用"
-    ],
-    answer: 0
+    difficulty: "medium",
+    question: "RAG中的“路由”（Routing）是指？",
+    options: ["根据查询类型选择不同的检索源或处理流程", "网络数据包传输", "向量数据库的分片策略", "生成模型的采样策略"],
+    answer: 0,
   },
-  // --- RAG 评估与优化 (21-30) ---
   {
     id: 71,
-    difficulty: "hard",
-    question: "RAGAS 框架主要用于什么？",
-    options: [
-      "评估 RAG 系统的性能指标（忠实度、相关性、上下文精度等）",
-      "加速 RAG 系统的推理速度",
-      "生成训练用的 Embedding 数据",
-      "替代向量数据库"
-    ],
-    answer: 0
+    difficulty: "medium",
+    question: "以下哪个开源框架专门为RAG的评估设计？",
+    options: ["RAGAS", "TensorBoard", "Weights & Biases", "MLflow"],
+    answer: 0,
   },
   {
     id: 72,
-    difficulty: "hard",
-    question: "在 RAG 评估中，Faithfulness（忠实度）指的是什么？",
-    options: [
-      "生成的答案是否完全基于检索到的上下文，而非模型自身知识",
-      "答案的语法是否正确",
-      "答案的长度是否合适",
-      "检索速度是否够快"
-    ],
-    answer: 0
+    difficulty: "medium",
+    question: "RAGAS评估框架中，“答案相关性”（Answer Relevance）主要通过什么方式计算？",
+    options: ["让LLM生成问题并与原查询比较", "计算BLEU分数", "人工标注", "向量距离"],
+    answer: 0,
   },
   {
     id: 73,
-    difficulty: "hard",
-    question: "RAG 评估中的 Context Recall（上下文召回率）衡量什么？",
-    options: [
-      "检索到的上下文覆盖了参考答案中多少信息",
-      "检索速度有多快",
-      "用户满意度评分",
-      "系统正常运行时间"
-    ],
-    answer: 0
+    difficulty: "medium",
+    question: "当检索到的文档包含相互矛盾的信息时，生成模型应该？",
+    options: ["忽略所有文档", "基于自身知识选择一种", "指出矛盾并尝试给出最可信答案", "只选择第一段"],
+    answer: 2,
   },
   {
     id: 74,
-    difficulty: "hard",
-    question: "什么情况下 RAG 系统可能出现「Lost in the Middle」问题？",
-    options: [
-      "当检索到的上下文过长时，LLM 倾向于忽略中间部分的信息",
-      "系统部署在数据中心时",
-      "使用中等大小的 Chunk 时",
-      "用户输入过短时"
-    ],
-    answer: 0
+    difficulty: "medium",
+    question: "在RAG中，“上下文学习”（In-Context Learning）是指？",
+    options: ["通过检索到的示例指导LLM生成", "在上下文中训练模型", "动态调整上下文窗口大小", "检索模型的上下文表示"],
+    answer: 0,
   },
   {
     id: 75,
-    difficulty: "hard",
-    question: "RAG 的 Context Relevance（上下文相关性）指标的评估对象是什么？",
-    options: [
-      "检索到的文档片段与查询的相关程度",
-      "生成答案的流畅度",
-      "系统的响应时间",
-      "用户的满意度"
-    ],
-    answer: 0
+    difficulty: "medium",
+    question: "以下哪个技术可以缓解RAG中由于分块导致的答案跨块问题？",
+    options: ["父文档检索（Parent Document Retriever）", "增大块尺寸", "减少检索数量", "使用更小的嵌入模型"],
+    answer: 0,
   },
   {
     id: 76,
-    difficulty: "hard",
-    question: "在 RAG 中，如何进行 Effective Chunk Size 的调优？",
-    options: [
-      "通过实验评估不同 Chunk 大小对检索和生成质量的影响，找到最佳平衡点",
-      "永远使用最大的 Chunk 大小",
-      "永远使用最小的 Chunk 大小",
-      "随机选择 Chunk 大小"
-    ],
-    answer: 0
+    difficulty: "medium",
+    question: "对于延迟敏感的RAG应用，下列优化最有效的是？",
+    options: ["使用量化后的嵌入模型和ANN索引", "增加生成模型的参数", "提高检索的top-k值", "使用更复杂的重排序模型"],
+    answer: 0,
   },
   {
     id: 77,
-    difficulty: "hard",
-    question: "RAG 系统中，Answer Correctness 评估通常需要什么？",
-    options: [
-      "参考答案 (Ground Truth) 作为对比基准",
-      "GPU 服务器",
-      "用户的个人信息",
-      "实时网络连接"
-    ],
-    answer: 0
+    difficulty: "medium",
+    question: "“记忆型RAG”（Memory RAG）相对于基础RAG增加了什么？",
+    options: ["外部记忆模块用于跨会话信息存储", "更大的模型参数", "更多的训练数据", "图像处理能力"],
+    answer: 0,
   },
   {
     id: 78,
-    difficulty: "hard",
-    question: "RAG 系统中「检索噪声」指的是什么？",
-    options: [
-      "检索到的不相关或低质量文档片段",
-      "数据库的读写噪声",
-      "模型训练时的梯度噪声",
-      "网络传输中的数据丢失"
-    ],
-    answer: 0
+    difficulty: "medium",
+    question: "下列哪个选项正确描述了RAG中的“递归检索”（Recursive Retrieval）？",
+    options: ["根据初始检索结果生成新查询并再次检索", "递归地分割文档", "递归地训练检索器", "递归地生成答案"],
+    answer: 0,
   },
   {
     id: 79,
-    difficulty: "hard",
-    question: "在 RAG 中如何缓解检索噪声对生成质量的负面影响？",
-    options: [
-      "使用 Re-ranking 和过滤机制，增强 Prompt 指令对噪声的鲁棒性",
-      "完全不使用检索",
-      "增加噪声文档的数量",
-      "减少 Chunk 大小到 1 token"
-    ],
-    answer: 0
+    difficulty: "medium",
+    question: "针对结构化数据（如表格），RAG的检索通常需要？",
+    options: ["将表格序列化成文本或使用特殊嵌入方法", "无法处理结构化数据", "转换为图像", "使用关系数据库代替向量库"],
+    answer: 0,
   },
   {
     id: 80,
+    difficulty: "medium",
+    question: "评估RAG生成答案的“噪声鲁棒性”（Noise Robustness）的方法是？",
+    options: ["在检索结果中加入随机不相关文档，观察答案质量下降程度", "测量答案的长度", "计算生成时间", "检查是否存在语法错误"],
+    answer: 0,
+  },
+  {
+    id: 81,
     difficulty: "hard",
-    question: "RAG 系统中，如何平衡检索精度和召回率？",
-    options: [
-      "通过调整 Top-K、相似度阈值、混合检索权重等参数来平衡",
-      "只关注精度，忽略召回率",
-      "只关注召回率，忽略精度",
-      "精度和召回率无法同时优化"
-    ],
-    answer: 0
-  }
+    question: "在“修正检索增强生成”（Corrective RAG）中，当检测到检索文档与查询相关性低时，系统会？",
+    options: ["放弃检索并直接使用LLM生成", "触发网络搜索或备用检索源", "增加温度参数重新生成", "降低阈值重复检索"],
+    answer: 1,
+  },
+  {
+    id: 82,
+    difficulty: "hard",
+    question: "假设生成模型为7B参数LLM，上下文窗口为4096 token，每个文档块约500 token。为了保证生成答案时还能容纳至少256 token的输出，最多能检索多少个块？",
+    options: ["约8个", "约16个", "约4个", "约7个"],
+    answer: 3,
+  },
+  {
+    id: 83,
+    difficulty: "hard",
+    question: "在RAG中，使用“知识蒸馏”来压缩检索器的主要挑战是？",
+    options: ["保持双编码器（查询和文档）的对齐能力", "蒸馏后的模型无法处理长文本", "蒸馏会导致检索精度必然下降", "蒸馏只适用于生成模型"],
+    answer: 0,
+  },
+  {
+    id: 84,
+    difficulty: "hard",
+    question: "下列哪种情况最可能导致RAG的“反链式幻觉”（Anti-chain Hallucination）？",
+    options: ["检索到的文档与LLM内部知识强烈冲突，LLM拒绝遵从", "检索结果完全正确但LLM忽略", "查询过于模糊", "知识库过时"],
+    answer: 0,
+  },
+  {
+    id: 85,
+    difficulty: "hard",
+    question: "在“自适应检索”（Adaptive Retrieval）策略中，模型如何决定是否需要进行检索？",
+    options: ["基于对自身知识置信度的评估", "总是检索", "从不检索", "随机决定"],
+    answer: 0,
+  },
+  {
+    id: 86,
+    difficulty: "hard",
+    question: "假设你想让RAG系统支持百万级文档的实时更新（每秒数十个新文档），以下哪个索引方案最合适？",
+    options: ["基于HNSW的向量索引并支持增量插入", "全量重建的IVF索引", "基于磁盘的FLAT索引", "不使用索引，每次线性扫描"],
+    answer: 0,
+  },
+  {
+    id: 87,
+    difficulty: "hard",
+    question: "针对RAG的“主动学习”用于改进检索器时，通常选择哪些样本进行标注？",
+    options: ["模型最不确定的查询-文档对", "随机抽取的样本", "最容易的样本", "最长的文档"],
+    answer: 0,
+  },
+  {
+    id: 88,
+    difficulty: "hard",
+    question: "以下哪个损失函数设计最适用于联合训练RAG的检索器和生成器？",
+    options: ["检索器的对比损失 + 生成器的负对数似然，通过加权和联合优化", "只优化生成器的交叉熵", "只优化检索器的三元组损失", "对抗损失"],
+    answer: 0,
+  },
+  {
+    id: 89,
+    difficulty: "hard",
+    question: "在RAG中，如果检索器使用BERT-based的稠密编码器，而生成器使用GPT，如何解决嵌入空间不一致的问题？",
+    options: ["在生成器输入前加一个可训练的适配器层", "强制两者使用相同的tokenizer", "冻结检索器", "使用余弦相似度代替点积"],
+    answer: 0,
+  },
+  {
+    id: 90,
+    difficulty: "hard",
+    question: "对于需要处理私有数据且不能将数据发送到外部API的RAG系统，以下哪个部署方案最合适？",
+    options: ["完全本地部署，使用开源的LLM和向量数据库", "使用云提供商的托管RAG服务", "使用闭源商业LLM API", "不部署RAG，仅用本地关键词搜索"],
+    answer: 0,
+  },
+  {
+    id: 91,
+    difficulty: "hard",
+    question: "“迭代RAG”（Iterative RAG）与“自适应RAG”的区别是？",
+    options: ["迭代RAG固定多轮检索，自适应根据置信度动态决定", "迭代RAG每次检索相同数量文档", "自适应RAG无法处理复杂问题", "两者没有区别"],
+    answer: 0,
+  },
+  {
+    id: 92,
+    difficulty: "hard",
+    question: "评估RAG系统时，如果生成答案完全正确但未引用任何检索文档（即完全来自LLM内部知识），下列哪个指标会较低？",
+    options: ["忠实度（Faithfulness）", "答案准确性（Answer Accuracy）", "检索召回率（Retrieval Recall）", "生成流畅度"],
+    answer: 0,
+  },
+  {
+    id: 93,
+    difficulty: "hard",
+    question: "在RAG中，使用“最大边际相关性”（MMR, Maximum Marginal Relevance）进行重排序的目的主要是？",
+    options: ["在相关性和多样性之间平衡，避免冗余", "最大化相关性", "最小化计算开销", "确保排序稳定"],
+    answer: 0,
+  },
+  {
+    id: 94,
+    difficulty: "hard",
+    question: "以下哪个策略可以最有效地减少RAG的“检索延迟”同时保持高召回率？",
+    options: ["使用多阶段检索：粗排ANN + 精排小模型", "增加HNSW的ef_construction参数", "使用全精确检索", "将向量维度提升到4096"],
+    answer: 0,
+  },
+  {
+    id: 95,
+    difficulty: "hard",
+    question: "假设生成模型是经过RLHF训练的，直接将其用于RAG可能出现什么新问题？",
+    options: ["模型可能更倾向于输出有用但虚构的内容，而不是依赖检索到的知识", "模型无法处理长上下文", "检索器与生成器不兼容", "推理速度显著下降"],
+    answer: 0,
+  },
+  {
+    id: 96,
+    difficulty: "hard",
+    question: "对于多跳问题（Multi-hop QA），传统单次RAG往往效果不佳，以下哪种改进最有效？",
+    options: ["链式检索（Chain-of-Retrieval）或基于图的检索", "增大块大小", "减少检索文档数量", "使用更大的嵌入模型"],
+    answer: 0,
+  },
+  {
+    id: 97,
+    difficulty: "hard",
+    question: "在RAG的评估中，使用LLM-as-a-Judge来评估答案质量时，主要挑战是？",
+    options: ["Judge模型本身可能具有偏见或与待评估模型同源", "成本过高", "无法处理长答案", "速度太慢"],
+    answer: 0,
+  },
+  {
+    id: 98,
+    difficulty: "hard",
+    question: "以下哪种RAG架构最适合处理需要实时更新知识的场景，且每次查询成本敏感？",
+    options: ["冻结的检索器和生成器，只更新向量库", "每天微调生成模型", "不使用检索，仅用长上下文LLM", "混合使用BM25和LLM rerank"],
+    answer: 0,
+  },
+  {
+    id: 99,
+    difficulty: "hard",
+    question: "“CRAG”（Corrective RAG）中，用于评估检索文档相关性的“轻量级评估器”通常如何训练？",
+    options: ["使用相关性标注数据，训练一个二分类器（如BERT）", "使用生成模型自身评分", "人工规则", "无监督聚类"],
+    answer: 0,
+  },
+  {
+    id: 100,
+    difficulty: "hard",
+    question: "给定一个RAG系统，检索召回率接近100%，但答案准确率仅60%，最不可能的原因是？",
+    options: ["生成模型能力不足", "检索到的文档中包含大量噪声或矛盾信息", "用户查询过于模糊", "向量索引内存不足"],
+    answer: 3,
+  },
 ];
 
 module.exports = questions;
