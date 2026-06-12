@@ -26,9 +26,9 @@ npm install --production | Out-Null
 npm install esbuild --save-dev | Out-Null
 
 # Bundle server.js -> single file, externalize node:sqlite
-npx esbuild server.js --bundle --platform=node --format=cjs `
-  --external:node:sqlite `
-  --outfile=(Join-Path $PkgDir "server.js")
+$OutFile = Join-Path $PkgDir "server.js"
+npx esbuild server.js --bundle --platform=node --format=cjs --external:node:sqlite --outfile="$OutFile"
+if ($LASTEXITCODE -ne 0) { throw "esbuild failed" }
 
 # Copy questions data
 Copy-Item (Join-Path $ProjectDir "backend\questions.js") $PkgDir
