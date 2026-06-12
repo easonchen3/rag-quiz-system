@@ -54,9 +54,6 @@ const insertStmt = db.prepare(
   "INSERT INTO results (name, employee_id, answers, score, total, details, submitted_at) VALUES (?, ?, ?, ?, ?, ?, ?)"
 );
 const selectAllStmt = db.prepare("SELECT * FROM results ORDER BY id DESC");
-const selectLatestStmt = db.prepare(
-  "SELECT * FROM results WHERE id IN (SELECT MAX(id) FROM results GROUP BY employee_id) ORDER BY id DESC"
-);
 
 // 随机抽取题目（选项随机打乱，正确答案位置随机）
 app.get("/api/questions", (req, res) => {
@@ -145,22 +142,37 @@ app.get("/api/results", (req, res) => {
   res.json(rows);
 });
 
-// 每人最新一条成绩（去重，按 employee_id）
-app.get("/api/results/latest", (req, res) => {
-  const rows = selectLatestStmt.all();
-  res.json(rows);
+// 排行榜：每人取最高分，同分则取最早提交，按分数降序+时间升序
+function getLeaderboard() {
+  const all = selectAllStmt.all();
+  const best = new Map();
+  all.forEach((r) => {
+    const existing = best.get(r.employee_id);
+    if (!existing || r.score > existing.score || (r.score === existing.score && r.id < existing.id)) {
+      best.set(r.employee_id, r);
+    }
+  });
+  return Array.from(best.values()).sort((a, b) => {
+    if (b.score !== a.score) return b.score - a.score;
+    return a.id - b.id;
+  });
+}
+
+// 排行榜 JSON
+app.get("/api/leaderboard", (req, res) => {
+  res.json(getLeaderboard());
 });
 
-// CSV 导出全量成绩
-app.get("/api/results/export", (req, res) => {
-  const rows = selectAllStmt.all();
-  const header = "id,name,employee_id,score,total,submitted_at\n";
+// 排行榜 CSV 导出
+app.get("/api/leaderboard/export", (req, res) => {
+  const rows = getLeaderboard();
+  const header = "rank,name,employee_id,score,submitted_at\n";
   const csv = rows
-    .map((r) => `${r.id},"${r.name}","${r.employee_id}",${r.score},${r.total},"${r.submitted_at}"`)
+    .map((r, i) => `${i + 1},"${r.name}","${r.employee_id}",${r.score},"${r.submitted_at}"`)
     .join("\n");
   res.setHeader("Content-Type", "text/csv; charset=utf-8");
-  res.setHeader("Content-Disposition", "attachment; filename=rag-quiz-results.csv");
-  res.send("﻿" + header + csv); // BOM for Excel 中文兼容
+  res.setHeader("Content-Disposition", "attachment; filename=rag-quiz-leaderboard.csv");
+  res.send("﻿" + header + csv);
 });
 
 // 清除所有结果
