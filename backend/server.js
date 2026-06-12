@@ -54,6 +54,9 @@ const insertStmt = db.prepare(
   "INSERT INTO results (name, employee_id, answers, score, total, details, submitted_at) VALUES (?, ?, ?, ?, ?, ?, ?)"
 );
 const selectAllStmt = db.prepare("SELECT * FROM results ORDER BY id DESC");
+const selectLatestStmt = db.prepare(
+  "SELECT * FROM results WHERE id IN (SELECT MAX(id) FROM results GROUP BY employee_id) ORDER BY id DESC"
+);
 
 // 随机抽取题目（选项随机打乱，正确答案位置随机）
 app.get("/api/questions", (req, res) => {
@@ -140,6 +143,24 @@ app.post("/api/submit", (req, res) => {
 app.get("/api/results", (req, res) => {
   const rows = selectAllStmt.all();
   res.json(rows);
+});
+
+// 每人最新一条成绩（去重，按 employee_id）
+app.get("/api/results/latest", (req, res) => {
+  const rows = selectLatestStmt.all();
+  res.json(rows);
+});
+
+// CSV 导出全量成绩
+app.get("/api/results/export", (req, res) => {
+  const rows = selectAllStmt.all();
+  const header = "id,name,employee_id,score,total,submitted_at\n";
+  const csv = rows
+    .map((r) => `${r.id},"${r.name}","${r.employee_id}",${r.score},${r.total},"${r.submitted_at}"`)
+    .join("\n");
+  res.setHeader("Content-Type", "text/csv; charset=utf-8");
+  res.setHeader("Content-Disposition", "attachment; filename=rag-quiz-results.csv");
+  res.send("﻿" + header + csv); // BOM for Excel 中文兼容
 });
 
 // 清除所有结果
