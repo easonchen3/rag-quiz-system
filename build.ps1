@@ -7,7 +7,7 @@ $ErrorActionPreference = "Stop"
 [Console]::OutputEncoding = [Text.Encoding]::UTF8
 
 $ProjectDir = $PSScriptRoot
-$BuildDir   = Join-Path $ProjectDir "build"
+$BuildDir   = Join-Path $ProjectDir "build_pkg"
 $PkgDir     = Join-Path $BuildDir "rag-quiz"
 $ZipFile    = Join-Path $ProjectDir "rag-quiz-deploy.zip"
 

@@ -6,4 +6,5 @@ quiz.db
 *.log
 logs/
 build/
+build_pkg/
 rag-quiz-deploy.zip
