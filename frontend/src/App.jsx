@@ -55,10 +55,18 @@ function QuizPage({ user, questions, onSubmit }) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [answers, setAnswers] = useState({})
   const [submitting, setSubmitting] = useState(false)
+  const [bestScore, setBestScore] = useState(null)
 
   const currentQ = questions[currentIndex]
   const progress = ((currentIndex + 1) / questions.length) * 100
   const allAnswered = questions.every((q) => answers[q.id] !== undefined)
+
+  useEffect(() => {
+    fetch(`${API_BASE}/best/${user.employeeId}`)
+      .then((res) => res.json())
+      .then((data) => { if (data) setBestScore(data.score) })
+      .catch(() => {})
+  }, [user.employeeId])
 
   const selectOption = (questionId, optionIndex) => {
     if (submitting) return
@@ -87,11 +95,16 @@ function QuizPage({ user, questions, onSubmit }) {
 
   return (
     <div className="card">
-      <div className="progress-wrap">
-        <div className="progress-bar">
-          <div className="progress-bar-fill" style={{ width: `${progress}%` }} />
+      <div className="quiz-header">
+        <div className="progress-wrap">
+          <div className="progress-bar">
+            <div className="progress-bar-fill" style={{ width: `${progress}%` }} />
+          </div>
+          <span className="progress-text">{currentIndex + 1} / {questions.length}</span>
         </div>
-        <span className="progress-text">{currentIndex + 1} / {questions.length}</span>
+        {bestScore !== null && (
+          <div className="best-score">历史最高：<strong>{bestScore} 分</strong></div>
+        )}
       </div>
 
       <div className="question-text">

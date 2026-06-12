@@ -219,6 +219,26 @@ body {
   text-align: right;
 }
 
+.quiz-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.quiz-header .progress-wrap {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.best-score {
+  font-size: 0.82rem;
+  color: var(--gold);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
 /* ===== Question ===== */
 .question-text {
   font-size: 1.05rem;

@@ -158,6 +158,14 @@ function getLeaderboard() {
   });
 }
 
+// 查询某人最高成绩
+app.get("/api/best/:employeeId", (req, res) => {
+  const rows = selectAllStmt.all().filter((r) => r.employee_id === req.params.employeeId);
+  if (rows.length === 0) return res.json(null);
+  const best = rows.reduce((a, b) => (b.score > a.score || (b.score === a.score && b.id < a.id) ? b : a));
+  res.json(best);
+});
+
 // 排行榜 JSON
 app.get("/api/leaderboard", (req, res) => {
   res.json(getLeaderboard());
