@@ -76,9 +76,8 @@ pm2 start server.js --name rag-quiz-backend --cwd "$DEPLOY_DIR" \
     --error logs/err.log --output logs/out.log \
     --max-memory-restart 256M
 
-# nginx
-NGINX_HOST=$(grep -oP 'server_name\s+\K\S+' nginx.conf | head -1)
-sed "s|root /opt/rag-quiz/frontend/dist|root $DEPLOY_DIR/frontend|" nginx.conf | \
+# nginx - replace all /opt/rag-quiz paths with actual deploy dir
+sed "s|/opt/rag-quiz|$DEPLOY_DIR|g" nginx.conf | \
 sudo tee /etc/nginx/conf.d/rag-quiz.conf > /dev/null
 
 if sudo nginx -t 2>/dev/null; then
